@@ -1,0 +1,6 @@
+Hello! I\'m here to help you with your sins
+>**!tiddy** Shows a random tiddy
+>**!tiddy add <url>** Adds <url> to the tiddy cause
+>**!tiddy undo** Deletes the most recent tiddy url added
+>**!tit** It's a surprise!
+>**!tiddy help** You're looking at it
