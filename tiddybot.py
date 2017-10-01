@@ -4,7 +4,7 @@ from tinydb import TinyDB, Query, where
 import random
 
 
-db = TinyDB(r'C:\Users\andre\Desktop\Practice Code\tiddy.json')
+db = TinyDB(r'.\tiddy.json')
 tiddy_list = list(map(lambda x: x.eid, db.all()))
 print(tiddy_list)
 client = discord.Client()
@@ -30,15 +30,15 @@ async def on_message(message):
     elif message.content.strip() == "!tit":
         await client.send_file(message.user, fp=r'C:\Users\andre\Desktop\Practice Code\tit.jpg', content='YOU FOUND THE TIT')
     elif message.content.strip() == "!tiddy help":
-        tiddyhelp(message.channel)
+        await tiddyhelp(message.channel)
     elif message.content.strip() == "!tiddy":
         await client.send_message(message.channel, db.get(eid=tiddy_list[random.randrange(0, len(tiddy_list))])['url'])        
 
 client.run('MzUwNzM3MzgzMzU0MDA3NTUy.DKAaUg.AecaPojDQL2wfM4CR49xFZ65Kyw')
 
 
-def tiddyhelp(ch):
-    em = discord.embed(title = "Tiddybot Help!", description = "Hello! I'm tiddybot, and I'm here to help you with your sins", fields = f)
+async def tiddyhelp(ch):
+    em = discord.Embed(title = "Tiddybot Help!", description = "Hello! I'm tiddybot, and I'm here to help you with your sins", fields = f)
     em.add_field(name = "!tiddy", value = "Shows a random tiddy")
     em.add_field(name = "!tiddy add <url>" , value= "Adds <url> to the tiddy cause. Currently there's no validation to check if the url is valid, so please use _!tiddy undo_ if you mess up")
     em.add_field(name = "!tiddy undo", value = "Deletes the most recent tiddy url added. This can include urls added from a while back, so please be careful.")
