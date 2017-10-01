@@ -28,7 +28,7 @@ async def on_message(message):
         tiddy_list.pop()
         await client.send_message(message.channel,"Deleting latest tiddy. Sayonara!" )
     elif message.content.strip() == "!tit":
-        await client.send_file(message.user, fp=r'C:\Users\andre\Desktop\Practice Code\tit.jpg', content='YOU FOUND THE TIT')
+        await client.send_file(message.user, fp=r'.\tit.jpg', content='YOU FOUND THE TIT')
     elif message.content.strip() == "!tiddy help":
         await tiddyhelp(message.channel)
     elif message.content.strip() == "!tiddy":
