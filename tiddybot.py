@@ -9,6 +9,15 @@ tiddy_list = list(map(lambda x: x.eid, db.all()))
 print(tiddy_list)
 client = discord.Client()
 
+async def tiddyhelp(ch):
+    em = discord.Embed(title = "Tiddybot Help!", description = "Hello! I'm tiddybot, and I'm here to help you with your sins")
+    em.add_field(name = "!tiddy", value = "Shows a random tiddy")
+    em.add_field(name = "!tiddy add <url>" , value= "Adds <url> to the tiddy cause. Currently there's no validation to check if the url is valid, so please use _!tiddy undo_ if you mess up")
+    em.add_field(name = "!tiddy undo", value = "Deletes the most recent tiddy url added. This can include urls added from a while back, so please be careful.")
+    em.add_field(name = "!tiddy help", value = "You're looking at it!")
+    em.add_field(name = "!tit", value = "It's a surprise!")
+    em.set_author(name = "tiddybot")
+    await client.send_message(ch, embed= em)
 
 @client.event
 async def on_ready():
@@ -28,7 +37,7 @@ async def on_message(message):
         tiddy_list.pop()
         await client.send_message(message.channel,"Deleting latest tiddy. Sayonara!" )
     elif message.content.strip() == "!tit":
-        await client.send_file(message.user, fp=r'.\tit.jpg', content='YOU FOUND THE TIT')
+        await client.send_file(message.author, fp=r'.\tit.jpg', content='YOU FOUND THE TIT')
     elif message.content.strip() == "!tiddy help":
         await tiddyhelp(message.channel)
     elif message.content.strip() == "!tiddy":
@@ -37,12 +46,3 @@ async def on_message(message):
 client.run('MzUwNzM3MzgzMzU0MDA3NTUy.DKAaUg.AecaPojDQL2wfM4CR49xFZ65Kyw')
 
 
-async def tiddyhelp(ch):
-    em = discord.Embed(title = "Tiddybot Help!", description = "Hello! I'm tiddybot, and I'm here to help you with your sins", fields = f)
-    em.add_field(name = "!tiddy", value = "Shows a random tiddy")
-    em.add_field(name = "!tiddy add <url>" , value= "Adds <url> to the tiddy cause. Currently there's no validation to check if the url is valid, so please use _!tiddy undo_ if you mess up")
-    em.add_field(name = "!tiddy undo", value = "Deletes the most recent tiddy url added. This can include urls added from a while back, so please be careful.")
-    em.add_field(name = "!tiddy help", value = "You're looking at it!")
-    em.add_field(name = "!tit", value = "It's a surprise!")
-    em.set_author(name = "tiddybot")
-    await client.send_message(ch, embed= em)
