@@ -24,6 +24,7 @@ async def on_ready():
     print("Logged in as:")
     print(client.user.name)
     print(client.user.id)
+    client.change_status(game="!tiddy help")
 
 #TO DO: add validation on adding, add help feature
 @client.event
@@ -37,7 +38,7 @@ async def on_message(message):
         tiddy_list.pop()
         await client.send_message(message.channel,"Deleting latest tiddy. Sayonara!" )
     elif message.content.strip() == "!tit":
-        await client.send_file(message.author, fp=r'.\tit.jpg', content='YOU FOUND THE TIT')
+        await client.send_file(message.author, fp=r'.\tit.png', content='YOU FOUND THE TIT')
     elif message.content.strip() == "!tiddy help":
         await tiddyhelp(message.channel)
     elif message.content.strip() == "!tiddy":
