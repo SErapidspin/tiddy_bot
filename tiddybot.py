@@ -12,8 +12,9 @@ client = discord.Client()
 async def tiddyhelp(ch):
     em = discord.Embed(title = "Tiddybot Help!", description = "Hello! I'm tiddybot, and I'm here to help you with your sins")
     em.add_field(name = "!tiddy", value = "Shows a random tiddy")
-    em.add_field(name = "!tiddy add <url>" , value= "Adds <url> to the tiddy cause. Currently there's no validation to check if the url is valid, so please use _!tiddy undo_ if you mess up")
-    em.add_field(name = "!tiddy undo", value = "Deletes the most recent tiddy url added. This can include urls added from a while back, so please be careful.")
+    em.add_field(name = "!tiddy add <url>" , value= "Adds <url> to the tiddy cause.")
+    em.add_field(name = "!tiddy undo", value = "Deletes the most recent tiddy url added. This is meant as more of a quick fix if you mess up adding something. For specific deletions, please use _!tiddy delete_")
+    em.add_field(name = "!tiddy delete <url>", value = "Deletes any instance of <url> in the tiddy database.")
     em.add_field(name = "!tiddy help", value = "You're looking at it!")
     em.add_field(name = "!tit", value = "It's a surprise!")
     em.set_author(name = "tiddybot")
@@ -32,7 +33,18 @@ async def on_message(message):
     if message.content.startswith("!tiddy add"):
         inserted = db.insert({"url": message.content[11:]})
         tiddy_list.append(inserted)
-        await client.send_message(message.channel, "Thank you for your contribution. Tiddy accepted")
+        await client.send_message(message.channel, "Thank you for your contribution. Tiddy accepted.")
+    elif message.content.startswith("!tiddy delete"):
+        delete_url = message.content[14:].strip()
+        print(delete_url)
+        if db.contains(where('url') == delete_url):
+            removed_id = db.remove(where('url') == delete_url)
+            for i in removed_id:
+                tiddy_list.remove(i)
+            print(tiddy_list)
+            await client.send_message(message.channel, "Tiddy URL has been deleted.")
+        else:
+            await client.send_message(message.channel, "Tiddy URL not found! Please double check that you've entered the URL correctly.")
     elif message.content.startswith("!tiddy undo"):
         db.remove(eids = [tiddy_list[-1]])
         tiddy_list.pop()
