@@ -2,6 +2,7 @@ import asyncio
 import discord
 from tinydb import TinyDB, Query, where
 import random
+import os
 
 
 db = TinyDB(r'.\tiddy.json')
@@ -36,12 +37,10 @@ async def on_message(message):
         await client.send_message(message.channel, "Thank you for your contribution. Tiddy accepted.")
     elif message.content.startswith("!tiddy delete"):
         delete_url = message.content[14:].strip()
-        print(delete_url)
         if db.contains(where('url') == delete_url):
             removed_id = db.remove(where('url') == delete_url)
             for i in removed_id:
                 tiddy_list.remove(i)
-            print(tiddy_list)
             await client.send_message(message.channel, "Tiddy URL has been deleted.")
         else:
             await client.send_message(message.channel, "Tiddy URL not found! Please double check that you've entered the URL correctly.")
@@ -50,7 +49,9 @@ async def on_message(message):
         tiddy_list.pop()
         await client.send_message(message.channel,"Deleting latest tiddy. Sayonara!" )
     elif message.content.strip() == "!tit":
-        await client.send_file(message.author, fp=r'.\tit.png', content='YOU FOUND THE TIT')
+        filelist = os.listdir("./tits")
+        randfile = os.path.join("tits", filelist[random.randrange(0, len(filelist))])
+        await client.send_file(message.author, randfile, content='YOU FOUND THE TIT')
     elif message.content.strip() == "!tiddy help":
         await tiddyhelp(message.channel)
     elif message.content.strip() == "!tiddy":
